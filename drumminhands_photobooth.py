@@ -116,15 +116,22 @@ def cleanup():
   GPIO.cleanup()
 atexit.register(cleanup)
 
-def shut_it_down(channel):  
-    print "Shutting down..." 
-    GPIO.output(led1_pin,True);
-    GPIO.output(led2_pin,True);
-    GPIO.output(led3_pin,True);
-    GPIO.output(led4_pin,True);
-    time.sleep(3)
-    os.system("sudo halt")
-
+def shut_it_down(channel): 
+	sleep(2)
+	
+	# check the button level again
+	if GPIO.input(channel) == 0:
+		print "still pressed, it must be a serious request"
+		exit_photobooth(channel)
+	else:
+		print "Shutting down..." 
+		GPIO.output(led1_pin,True);
+		GPIO.output(led2_pin,True);
+		GPIO.output(led3_pin,True);
+		GPIO.output(led4_pin,True);
+		time.sleep(3)
+		os.system("sudo halt")
+		
 def exit_photobooth(channel):
     print "Photo booth app ended. RPi still running" 
     GPIO.output(led1_pin,False);
@@ -396,7 +403,7 @@ print "IP: "+"\r\n".join(found_ips)
 show_image(real_path + "/intro.png", "IP: "+"\r\n".join(found_ips));
 time.sleep(5)
 
-GPIO.add_event_detect(button2_pin, GPIO.BOTH, callback=exit_photobooth, bouncetime=100) 
+GPIO.add_event_detect(button2_pin, GPIO.BOTH, callback=shut_it_down, bouncetime=100)
 
 try:  
 	while True:
