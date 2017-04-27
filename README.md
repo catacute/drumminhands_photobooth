@@ -8,3 +8,7 @@ This requires:
   - PiCamera -- http://picamera.readthedocs.org/
   - GraphicsMagick -- http://www.graphicsmagick.org/
   - pytumblr -- https://github.com/tumblr/pytumblr
+
+
+Just a quick show of my photobooth:  
+http://www.pictaram.com/media/1501511317437446338_42036017
